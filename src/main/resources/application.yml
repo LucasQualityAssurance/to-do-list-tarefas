@@ -1,0 +1,17 @@
+server:
+  port: 8081
+
+spring:
+  datasource:
+    url: 'jdbc:postgresql://${DATABASE_HOST:localhost}:${DATABASE_PORT:5432}/${DATABASE_NAME:plataforma_db}'
+    username: lucasqa
+    password: zyzz123
+    driver-class-name: org.postgresql.Driver
+
+  output:
+    ansi:
+      enabled: Always
+
+  jpa:
+    show-sql: true
+    format-sql: true

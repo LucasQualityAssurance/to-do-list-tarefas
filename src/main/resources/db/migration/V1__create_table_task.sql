@@ -1,0 +1,10 @@
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
+CREATE TABLE IF NOT EXISTS tarefa (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    titulo VARCHAR(100) NOT NULL,
+    descricao TEXT NOT NULL,
+    status VARCHAR(100) NOT NULL,
+    data_criacao TIMESTAMP WITHOUT TIME ZONE,
+    data_atualizacao TIMESTAMP WITHOUT TIME ZONE
+);

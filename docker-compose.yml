@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:15
+    container_name: postgres_db
+    restart: always
+    tty: true
+    environment:
+      POSTGRES_USER: lucasqa
+      POSTGRES_PASSWORD: zyzz123
+      POSTGRES_DB: plataforma_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
