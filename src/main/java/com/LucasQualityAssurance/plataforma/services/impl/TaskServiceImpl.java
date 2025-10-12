@@ -9,7 +9,9 @@ import com.LucasQualityAssurance.plataforma.services.ITaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class TaskServiceImpl implements ITaskService {
@@ -28,5 +30,21 @@ public class TaskServiceImpl implements ITaskService {
         TaskModel taskSaved = this.taskRepository.save(taskModel);
 
         return new TaskResponseDto(taskSaved);
+    }
+
+    @Override
+    public List<TaskResponseDto> findAll() {
+        List<TaskModel> taskModelList = this.taskRepository.findAll();
+        return taskModelList.stream().map(TaskResponseDto::new).toList();
+    }
+
+    @Override
+    public TaskResponseDto findById(UUID taskId) {
+        Optional<TaskModel> taskModelOptional = this.taskRepository.findById(taskId);
+        if (taskModelOptional.isEmpty()) {
+            throw new TaskException("Task with this id not found.");
+        }
+
+        return new TaskResponseDto(taskModelOptional.get());
     }
 }
