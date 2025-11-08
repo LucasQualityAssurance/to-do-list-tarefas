@@ -47,4 +47,14 @@ public class TaskServiceImpl implements ITaskService {
 
         return new TaskResponseDto(taskModelOptional.get());
     }
+
+    @Override
+    public void delete(UUID taskId) {
+        Optional<TaskModel> taskModelOptional = this.taskRepository.findById(taskId);
+        if (taskModelOptional.isEmpty()) {
+            throw new TaskException("Task with this id not found.");
+        }
+
+        this.taskRepository.delete(taskModelOptional.get());
+    }
 }

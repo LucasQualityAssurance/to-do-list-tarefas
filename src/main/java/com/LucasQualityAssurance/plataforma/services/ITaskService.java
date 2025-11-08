@@ -14,4 +14,6 @@ public interface ITaskService {
     List<TaskResponseDto> findAll();
 
     TaskResponseDto findById(UUID taskId);
+
+    void delete(UUID taskId);
 }

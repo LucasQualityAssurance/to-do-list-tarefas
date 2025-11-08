@@ -45,4 +45,15 @@ public class TaskController {
     public ResponseEntity<TaskResponseDto> getOneTask(@PathVariable(value = "taskId") UUID taskId) {
         return ResponseEntity.ok(this.service.findById(taskId));
     }
+
+    @DeleteMapping("/deletar/{taskId}")
+    @Transactional
+    public ResponseEntity<Object> deleteTask(@PathVariable(value = "taskId") UUID taskId) {
+        try {
+            this.service.delete(taskId);
+            return ResponseEntity.status(HttpStatus.OK).body("Task successfully deleted.");
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 }
