@@ -2,6 +2,7 @@ package com.LucasQualityAssurance.plataforma.services;
 
 import com.LucasQualityAssurance.plataforma.dtos.TaskDto;
 import com.LucasQualityAssurance.plataforma.dtos.TaskResponseDto;
+import com.LucasQualityAssurance.plataforma.dtos.TaskUpdateDto;
 import com.LucasQualityAssurance.plataforma.models.TaskModel;
 import jakarta.validation.Valid;
 
@@ -16,4 +17,6 @@ public interface ITaskService {
     TaskResponseDto findById(UUID taskId);
 
     void delete(UUID taskId);
+
+    TaskUpdateDto update(@Valid TaskUpdateDto data);
 }

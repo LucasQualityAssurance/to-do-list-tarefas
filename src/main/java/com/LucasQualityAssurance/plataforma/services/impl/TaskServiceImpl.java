@@ -2,6 +2,7 @@ package com.LucasQualityAssurance.plataforma.services.impl;
 
 import com.LucasQualityAssurance.plataforma.dtos.TaskDto;
 import com.LucasQualityAssurance.plataforma.dtos.TaskResponseDto;
+import com.LucasQualityAssurance.plataforma.dtos.TaskUpdateDto;
 import com.LucasQualityAssurance.plataforma.exceptions.TaskException;
 import com.LucasQualityAssurance.plataforma.models.TaskModel;
 import com.LucasQualityAssurance.plataforma.repositories.ITaskRepository;
@@ -9,6 +10,7 @@ import com.LucasQualityAssurance.plataforma.services.ITaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -56,5 +58,20 @@ public class TaskServiceImpl implements ITaskService {
         }
 
         this.taskRepository.delete(taskModelOptional.get());
+    }
+
+    @Override
+    public TaskUpdateDto update(TaskUpdateDto data) {
+        Optional<TaskModel> taskModelOptional = this.taskRepository.findById(data.getId());
+        if (taskModelOptional.isEmpty()) {
+            throw new TaskException("Task with this id not found.");
+        }
+        TaskModel taskModel = taskModelOptional.get();
+        taskModel.setTitle(data.getTitle());
+        taskModel.setDescription(data.getDescription());
+        taskModel.setStatus(data.getStatus());
+        taskModel.setUpdatedAt(LocalDateTime.now());
+        this.taskRepository.save(taskModel);
+        return new TaskUpdateDto(taskModel);
     }
 }

@@ -2,6 +2,7 @@ package com.LucasQualityAssurance.plataforma.controllers;
 
 import com.LucasQualityAssurance.plataforma.dtos.TaskDto;
 import com.LucasQualityAssurance.plataforma.dtos.TaskResponseDto;
+import com.LucasQualityAssurance.plataforma.dtos.TaskUpdateDto;
 import com.LucasQualityAssurance.plataforma.models.TaskModel;
 import com.LucasQualityAssurance.plataforma.services.ITaskService;
 import jakarta.transaction.Transactional;
@@ -52,6 +53,17 @@ public class TaskController {
         try {
             this.service.delete(taskId);
             return ResponseEntity.status(HttpStatus.OK).body("Task successfully deleted.");
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @PutMapping("/atualizar")
+    @Transactional
+    public ResponseEntity<Object> updateTask(@RequestBody @Valid TaskUpdateDto data) {
+        try {
+            TaskUpdateDto dataUpdated = this.service.update(data);
+            return ResponseEntity.status(HttpStatus.OK).body(dataUpdated);
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
